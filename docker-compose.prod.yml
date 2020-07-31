@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  zemberek:
+    image: "ryts/zemberek-grpc"
+    ports:
+      - "6789:6789"
+  postgres:
+    image: "postgres"
+    restart: "always"
+    environment:
+      POSTGRES_PASSWORD: "password"
+    ports:
+      - "5432:5432"
+    volumes:
+      #- "~/data/docker/postgres:/var/lib/postgresql/data"
+      - "./init-database.sh:/docker-entrypoint-initdb.d/init-database.sh"
+  backend:
+    image: "tahtaciburak/tunga-backend:v1"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - zemberek
+      - postgres
+  frontend:
+    image: "tahtaciburak/tunga-frontend-prod:v1"
+    ports:
+      - "3000:80"
+    

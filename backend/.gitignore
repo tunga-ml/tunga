@@ -1,0 +1,4 @@
+migrations
+project/server/auth/__pycache__/
+uploads
+.idea

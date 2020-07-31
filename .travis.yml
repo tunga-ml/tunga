@@ -1,0 +1,26 @@
+
+sudo: false
+language: python
+python:
+- '3.6'
+env:
+  global:
+  - PACKAGE_NAME=tunga
+before_install:
+  - export BUILD_VERSION=$(date "+%Y%m%d").$TRAVIS_BUILD_NUMBER
+  - export PACKAGE_NAME_VERSION=$PACKAGE_NAME.$BUILD_VERSION
+script:
+  - python setup.py sdist bdist_wheel
+  - pip install -r requirements.txt
+  - pip install .
+deploy:
+  provider: pypi
+  user: "__token__"
+  distributions: sdist bdist_wheel
+  password:
+    secure: "gRUNuqfDZsvTOxNVQP5cTPuODmIaLwSyPe+bUDehFNkxUrtajg75+SwLiU3ecjO8JFhkxwv0V6RRB3V8/A0Vvz7NF2NZEtsy7oXQ2UkXLxzCsRzo/F2Ot1uOcs1Q6mDGwpbP2f7sG9gLfsphYVpYltUAOxsj2YUotnVfhYmoLjkorCBS3dDVguEz3XAQFPHRgPiL+62RBSm14L8Hu39tKSd7U694EAF4xOTZHVYsXRWl6BZ1SZo5QhXkRrNzPx8T0rCAFXNgKlo9cNtQL0KWy3inya6iAJ8QLL8sDyAkNu/UhZirKNL2Ag8RSzbJmTQJ9rKZXu5nr2ScxyeTIYrjSx1YgLR/tDm5XQCm67xTeZHxq9xy1m+BmXQz/V/FueUfkuuoOV3JI+h3NWctIt3nNuggSVhirx+gsqBRm7bIAbPCv4farV+JHLgGZ2oKeewMT3ZK1MzzqvaTTU0zqcYRHxlfBKuO7b7Fx7Tt1MlQcD5B1lrUedC5d6TBgeNmNqsAcUvciuE1A+lOz/WOrlW/982mj/BFUJwr3yzJKz8zUDYuEVkKuhXEwbsEA6je7PBHsWnJomux0VBY/P5Aj9SBXoUPiX++zzGyEZt8+TeKnfjCOoGXGqKj5eOTcs4We/+m3JI4qiPx3T/duUj369KOaR1bSYH8vBhvmlVxO4AHUy4="
+  skip_cleanup: true
+  skip_existing: true
+notifications:
+  email:
+  - tahtaciburak@gmail.com
